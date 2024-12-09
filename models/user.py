@@ -8,7 +8,7 @@ class User(db.Model):
     f_name = db.Column(db.String(100), nullable=False)
     l_name = db.Column(db.String(100), nullable=False)
     dob = db.Column(db.Date, nullable=False)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
 
 class UserSchema(ma.Schema):
     class Meta:
