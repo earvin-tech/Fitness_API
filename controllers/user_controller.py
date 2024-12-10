@@ -1,4 +1,6 @@
-from flask import Blueprint # type: ignore
+from flask import Blueprint, request # type: ignore
+from sqlalchemy.exc import IntegrityError # type: ignore
+from psycopg2 import errorcodes # type: ignore
 
 from init import db
 from models.user import User, users_schema, user_schema
@@ -21,3 +23,28 @@ def get_user(user_id):
         return data
     else:
         return {"message": f"User with ID {user_id} does not exist"}, 404
+
+@users_bp.route("/", methods=["POST"])
+def create_user():
+    try: 
+        body_data = request.get_json()
+
+        new_user = User(
+            f_name=body_data.get("f_name"),
+            l_name=body_data.get("l_name"),
+            dob=body_data.get("dob"),
+            email=body_data.get("email")
+        )
+
+        db.session.add(new_user)
+
+        db.session.commit()
+
+        return user_schema.dump(new_user), 201
+    
+    except IntegrityError as err:
+        if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
+            return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"message": "Email address is already in use"}, 409
