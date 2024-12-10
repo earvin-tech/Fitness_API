@@ -2,6 +2,7 @@ from flask import Blueprint # type: ignore
 
 from init import db
 from models.user import User
+from models.exercise import Exercise
 
 db_commands = Blueprint("db", __name__)
 
@@ -36,7 +37,19 @@ def seed_tables():
         )
     ]
 
+    exercises = [
+        Exercise(
+            name="Bicep curl",
+            muscle_group="Arms"
+        ),
+        Exercise(
+            name="Squat",
+            muscle_group="Lower body"
+        )
+    ]
+
     db.session.add_all(users)
+    db.session.add_all(exercises)
 
     db.session.commit()
 
