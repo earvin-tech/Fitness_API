@@ -1,6 +1,6 @@
 from init import db, ma
 
-class Workout(db.model):
+class Workout(db.Model):
     __tablename__ = "workouts"
 
     id = db.Column(db.Integer, primary_key=True)

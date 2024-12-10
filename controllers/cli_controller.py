@@ -3,6 +3,7 @@ from flask import Blueprint # type: ignore
 from init import db
 from models.user import User
 from models.exercise import Exercise
+from models.workout import Workout
 
 db_commands = Blueprint("db", __name__)
 
@@ -48,8 +49,23 @@ def seed_tables():
         )
     ]
 
+    workouts = [
+        Workout(
+            name="Arm workout",
+            user_id=1,
+            workout_date="2024-12-08",
+            duration="01:40:00"
+        ),
+        Workout(
+            user_id=1,
+            workout_date="2024-12-10",
+            duration="01:20:00"
+        )
+    ]
+
     db.session.add_all(users)
     db.session.add_all(exercises)
+    db.session.add_all(workouts)
 
     db.session.commit()
 
