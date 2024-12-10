@@ -79,7 +79,7 @@ def update_user(user_id):
 
             db.session.commit()
 
-            return users_schema.dump(user)
+            return user_schema.dump(user)
         else:
             return {"message": f"User with ID {user_id} does not exist"}, 404
 
