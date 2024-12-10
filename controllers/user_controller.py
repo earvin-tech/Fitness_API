@@ -60,7 +60,7 @@ def delete_user(user_id):
 
         return {"message": f"User '{user.f_name} {user.l_name}' deleted successfully"}
     else:
-        return {"message": f"user with ID {user_id} does not exist"}, 404
+        return {"message": f"User with ID {user_id} does not exist"}, 404
     
 
 @users_bp.route("/<int:user_id>", methods=["PUT", "PATCH"])
