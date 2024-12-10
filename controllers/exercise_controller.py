@@ -23,3 +23,26 @@ def get_exercise(exercise_id):
         return data
     else:
         return {"message": f"Exercise with ID {exercise_id} does not exist"}, 404
+    
+@exercises_bp.route("/", methods=["POST"])
+def create_exercise():
+    try:
+        body_data = request.get_json()
+
+        new_exercise = Exercise(
+            name=body_data.get("name"),
+            muscle_group=body_data.get("muscle_group")
+        )
+
+        db.session.add(new_exercise)
+
+        db.session.commit()
+
+        return exercise_schema.dump(new_exercise), 201
+    
+    except IntegrityError as err:
+        if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
+            return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+        
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"message": "Exercise name is already in use"}, 409
