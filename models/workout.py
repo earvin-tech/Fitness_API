@@ -6,7 +6,7 @@ class Workout(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(100))
-    user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     workout_date = db.Column(db.Date, nullable=False)
     duration = db.Column(db.Interval, nullable=False)
 
