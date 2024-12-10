@@ -59,3 +59,24 @@ def delete_exercise(exercise_id):
         return {"message": f"Exercise: {exercise.name} has been deleted successfully"}
     else:
         return {"message": f"Exercise with ID {exercise_id} does not exist"}, 404
+    
+@exercises_bp.route("/<int:exercise_id>", methods=["PUT", "PATCH"])
+def update_exercise(exercise_id):
+    try:
+        stmt = db.select(Exercise).filter_by(id=exercise_id)
+        exercise = db.session.scalar(stmt)
+
+        body_data = request.get_json()
+
+        if exercise:
+            exercise.name = body_data.get("name") or exercise.name
+            exercise.muscle_group = body_data.get("muscle_group") or exercise.muscle_group
+
+            db.session.commit()
+
+            return exercise_schema.dump(exercise)
+        else:
+            return {"message": f"Exercise with ID {exercise_id} does not exist"}, 404
+
+    except IntegrityError:
+        return {"message": "Name of exercise is already in use"}, 409
