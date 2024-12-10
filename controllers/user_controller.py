@@ -48,3 +48,16 @@ def create_user():
 
         if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
             return {"message": "Email address is already in use"}, 409
+
+@users_bp.route("/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+
+    if user:
+        db.session.delete(user)
+        db.session.commit()
+
+        return {"message": f"User '{user.f_name} {user.l_name}' deleted successfully"}
+    else:
+        return {"message": f"user with ID {user_id} does not exist"}, 404
