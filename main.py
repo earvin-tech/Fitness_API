@@ -5,6 +5,7 @@ from flask import Flask # type:ignore
 from init import db, ma
 from controllers.cli_controller import db_commands
 from controllers.user_controller import users_bp
+from controllers.exercise_controller import exercises_bp
 
 def create_app():
     app = Flask(__name__)
@@ -16,5 +17,6 @@ def create_app():
 
     app.register_blueprint(db_commands)
     app.register_blueprint(users_bp)
+    app.register_blueprint(exercises_bp)
 
     return app
