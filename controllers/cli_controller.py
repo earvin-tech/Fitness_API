@@ -4,6 +4,7 @@ from init import db
 from models.user import User
 from models.exercise import Exercise
 from models.workout import Workout
+from models.workout_exercise import WorkoutExercise
 
 db_commands = Blueprint("db", __name__)
 
@@ -63,9 +64,20 @@ def seed_tables():
         )
     ]
 
+    workout_exercises = [
+        WorkoutExercise(
+            workout_id=1,
+            exercise_id=1,
+            sets=3,
+            reps=12,
+            weight=12.00
+        )
+    ]
+
     db.session.add_all(users)
     db.session.add_all(exercises)
     db.session.add_all(workouts)
+    db.session.add_all(workout_exercises)
 
     db.session.commit()
 
