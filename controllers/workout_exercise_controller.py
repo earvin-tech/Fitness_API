@@ -23,4 +23,27 @@ def get_workout_exercise(workout_exercise_id):
         data = workout_exercise_schema.dump(workout_exercise)
         return data
     else:
-        return {"message": f"Workout Exercise with ID {workout_exercise_id} does not exist"}
+        return {"message": f"Workout Exercise with ID {workout_exercise_id} does not exist"}, 404
+    
+@workout_exercises_bp.route("/", methods=["POST"])
+def create_workout_exercise():
+    try:
+        body_data = request.get_json()
+
+        new_workout_exercise = WorkoutExercise(
+            sets=body_data.get("sets"),
+            reps=body_data.get("reps"),
+            weight=body_data.get("weight"),
+            workout_id=body_data.get("workout_id"),
+            exercise_id=body_data.get("exercise_id")
+        )
+
+        db.session.add(new_workout_exercise)
+
+        db.session.commit()
+
+        return workout_exercise_schema.dump(new_workout_exercise), 201
+
+    except IntegrityError as err:
+        if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
+            return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409

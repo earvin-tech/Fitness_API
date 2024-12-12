@@ -26,16 +26,22 @@ def seed_tables():
 
     users = [
         User(
-            f_name="User",
-            l_name="One",
+            f_name="John",
+            l_name="Smith",
             dob="1998-01-28",
-            email="user1@email.com"
+            email="jsmith@email.com"
         ),
         User(
-            f_name="User",
-            l_name="Two",
+            f_name="Jen",
+            l_name="Wang",
             dob="2000-04-20",
-            email="user2@email.com"
+            email="jenw@email.com"
+        ),
+        User(
+            f_name="Antonio",
+            l_name="Chavez",
+            dob="1999-02-15",
+            email="Achav@email.com"
         )
     ]
 
@@ -47,6 +53,14 @@ def seed_tables():
         Exercise(
             name="Squat",
             muscle_group="Lower body"
+        ),
+        Exercise(
+            name="Tricep pulldown",
+            muscle_group="Arms"
+        ),
+        Exercise(
+            name="Barbell curls",
+            muscle_group="Arms"
         )
     ]
 
@@ -58,7 +72,7 @@ def seed_tables():
             duration="01:40:00"
         ),
         Workout(
-            user_id=1,
+            user_id=2,
             workout_date="2024-12-10",
             duration="01:20:00"
         )
@@ -71,6 +85,20 @@ def seed_tables():
             sets=3,
             reps=12,
             weight=12.00
+        ),
+        WorkoutExercise(
+            workout_id=1,
+            exercise_id=3,
+            sets=3,
+            reps=8,
+            weight=15.00
+        ),
+        WorkoutExercise(
+            workout_id=1,
+            exercise_id=4,
+            sets=2,
+            reps=10,
+            weight=12.50
         )
     ]
 
