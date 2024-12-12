@@ -20,7 +20,7 @@ class GoalSchema(ma.Schema):
     user = fields.Nested("UserSchema", only=["f_name", "l_name"])
     exercise = fields.Nested("ExerciseSchema", only=["name"])
     class Meta:
-        fields = ("id", "name", "exercise_id", "user_id", "goal_weight", "status_achiieved", "user", "exercise")
+        fields = ("id", "name", "exercise_id", "user_id", "goal_weight", "status_achieved", "user", "exercise")
 
 goal_schema = GoalSchema()
 goals_schema = GoalSchema(many=True)
