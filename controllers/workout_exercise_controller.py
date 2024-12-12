@@ -60,3 +60,26 @@ def delete_workout_exercise(workout_exercise_id):
         return {"message": f"Workout exercise with ID {workout_exercise.id} deleted successfully."}
     else:
         return {"message": f"Workout with ID {workout_exercise_id} does not exist"}, 404
+    
+@workout_exercises_bp.route("/<int:workout_exercise_id>", methods=["PUT", "PATCH"])
+def update_workout_exercise(workout_exercise_id):
+    try:
+        stmt = db.select(WorkoutExercise).filter_by(id=workout_exercise_id)
+        workout_exercise = db.session.scalar(stmt)
+
+        body_data = request.get_json()
+        
+        if workout_exercise:
+            workout_exercise.sets = body_data.get("sets") or workout_exercise.sets
+            workout_exercise.reps = body_data.get("reps") or workout_exercise.reps
+            workout_exercise.weight = body_data.get("weight") or workout_exercise.weight
+            workout_exercise.workout_id = body_data.get("workout_id") or workout_exercise.workout_id
+            workout_exercise.exercise_id = body_data.get("exercise_id") or workout_exercise.exercise_id
+
+            db.session.commit()
+
+            return workout_exercise_schema.dump(workout_exercise)
+        else:
+            return {"message": f"Workout exercise with ID {workout_exercise_id} does not exist"}, 404
+    except IntegrityError as err:
+        return {"message": err.orig.diag.message_primary}, 409

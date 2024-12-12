@@ -77,6 +77,6 @@ def update_workout(workout_id):
 
             return workout_schema.dump(workout)
         else:
-            return {"message": f"Workout with ID {workout_id} does not exist"}
+            return {"message": f"Workout with ID {workout_id} does not exist"}, 404
     except DataError as err:
         return {"message": err.orig.diag.message_primary}, 409
