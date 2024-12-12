@@ -11,11 +11,13 @@ class Exercise(db.Model):
     muscle_group = db.Column(db.String(100), nullable=False)
 
     workout_exercises = db.relationship("WorkoutExercise", back_populates="exercise", cascade="all,delete")
+    goals = db.relationship("Goal", back_populates="exercise", cascade="all,delete")
 
 class ExerciseSchema(ma.Schema):
     workout_exercises = fields.List(fields.Nested("WorkoutExerciseSchema", exclude=["exercise"]))
+    goals = fields.List(fields.Nested("GoalSchema", exclude=["exercise"]))
     class Meta:
-        fields = ("id", "name", "muscle_group", "workout_exercises")
+        fields = ("id", "name", "muscle_group", "workout_exercises", "goals")
 
 exercise_schema = ExerciseSchema()
 exercises_schema = ExerciseSchema(many=True)

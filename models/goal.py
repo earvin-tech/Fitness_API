@@ -8,8 +8,8 @@ class Goal(db.Model):
     id = db.Column(db.Integer, primary_key=True)
 
     name = db.Column(db.String(100))
-    exercise_id = db.Column(db.Integer, db.ForeignKey("exercises"), nullable=False)
-    user_id = db.Coluumn(db.Integer, db.ForeignKey("users"), nullable=False)
+    exercise_id = db.Column(db.Integer, db.ForeignKey("exercises.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     goal_weight = db.Column(db.Float, nullable=False)
     status_achieved = db.Column(db.Boolean, nullable=False, default=False)
 
@@ -18,7 +18,7 @@ class Goal(db.Model):
     
 class GoalSchema(ma.Schema):
     user = fields.Nested("UserSchema", only=["f_name", "l_name"])
-    exercise = fields.Nest("ExerciseSchema", only=["name"])
+    exercise = fields.Nested("ExerciseSchema", only=["name"])
     class Meta:
         fields = ("id", "name", "exercise_id", "user_id", "goal_weight", "status_achiieved", "user", "exercise")
 

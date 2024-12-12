@@ -5,6 +5,7 @@ from models.user import User
 from models.exercise import Exercise
 from models.workout import Workout
 from models.workout_exercise import WorkoutExercise
+from models.goal import Goal
 
 db_commands = Blueprint("db", __name__)
 
@@ -102,10 +103,21 @@ def seed_tables():
         )
     ]
 
+    goals = [
+        Goal(
+            name="Stronger Arms",
+            exercise_id=1,
+            user_id=1,
+            goal_weight=20.00,
+            status_achieved=False
+        )
+    ]
+
     db.session.add_all(users)
     db.session.add_all(exercises)
     db.session.add_all(workouts)
     db.session.add_all(workout_exercises)
+    db.session.add_all(goals)
 
     db.session.commit()
 
