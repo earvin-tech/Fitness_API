@@ -46,3 +46,15 @@ def create_goal():
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+        
+@goals_bp.route("/<int:goal_id>", methods=["DELETE"])
+def delete_goal(goal_id):
+    stmt = db.select(Goal).filter_by(id=goal_id)
+    goal = db.session.scalar(stmt)
+    if goal:
+        db.session.delete(goal)
+        db.session.commit()
+
+        return {"message": f"Goal with ID {goal.id} deleted successfully"}
+    else:
+        return {"message": f"Goal with ID {goal_id} does not exist"}, 404
