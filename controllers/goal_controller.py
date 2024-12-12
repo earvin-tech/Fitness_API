@@ -58,3 +58,27 @@ def delete_goal(goal_id):
         return {"message": f"Goal with ID {goal.id} deleted successfully"}
     else:
         return {"message": f"Goal with ID {goal_id} does not exist"}, 404
+    
+@goals_bp.route("/<int:goal_id>", methods=["PUT", "PATCH"])
+def update_goal(goal_id):
+    try:
+        stmt = db.select(Goal).filter_by(id=goal_id)
+        goal = db.session.scalar(stmt)
+
+        body_data = request.get_json()
+
+        if goal:
+            goal.name = body_data.get("name") or goal.name
+            goal.exercise_id = body_data.get("exercise_id") or goal.exercise_id
+            goal.user_id = body_data.get("user_id") or goal.user_id
+            goal.goal_weight = body_data.get("goal_weight") or goal.goal_weight
+            goal.status_achieved = body_data.get("status_achieved") or goal.status_achieved
+
+            db.session.commit()
+
+            return goal_schema.dump(goal)
+        else:
+            return {"message": f"Goal with ID {goal_id} does not exist"}, 404
+
+    except IntegrityError as err:
+        return {"message": err.orig.diag.message_primary}, 409
