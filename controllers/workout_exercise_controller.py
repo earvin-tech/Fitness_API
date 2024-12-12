@@ -47,3 +47,16 @@ def create_workout_exercise():
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+        
+@workout_exercises_bp.route("/<int:workout_exercise_id>", methods=["DELETE"])
+def delete_workout_exercise(workout_exercise_id):
+    stmt = db.select(WorkoutExercise).filter_by(id=workout_exercise_id)
+    workout_exercise = db.session.scalar(stmt)
+
+    if workout_exercise:
+        db.session.delete(workout_exercise)
+        db.session.commit()
+
+        return {"message": f"Workout exercise with ID {workout_exercise.id} deleted successfully."}
+    else:
+        return {"message": f"Workout with ID {workout_exercise_id} does not exist"}, 404
