@@ -7,6 +7,7 @@ from controllers.cli_controller import db_commands
 from controllers.user_controller import users_bp
 from controllers.exercise_controller import exercises_bp
 from controllers.workout_controller import workouts_bp
+from controllers.workout_exercise_controller import workout_exercises_bp
 
 def create_app():
     app = Flask(__name__)
@@ -20,5 +21,5 @@ def create_app():
     app.register_blueprint(users_bp)
     app.register_blueprint(exercises_bp)
     app.register_blueprint(workouts_bp)
-
+    app.register_blueprint(workout_exercises_bp)
     return app
