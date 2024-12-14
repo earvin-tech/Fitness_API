@@ -35,6 +35,10 @@ class UserSchema(ma.Schema):
         Length(min=2, error="Firstname must be at least 2 characters long"),
         Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed")
     ))
+
+    email = fields.String(required=True, validate=And(
+        Regexp('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', error="Invalid email address")
+    ))
     
 
     workouts = fields.List(fields.Nested("WorkoutSchema", exclude=["user"]))
