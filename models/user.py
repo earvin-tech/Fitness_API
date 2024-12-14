@@ -1,4 +1,5 @@
 from marshmallow import fields # type:ignore
+from marshmallow.validate import Length, And, Regexp # type: ignore
 
 from init import db, ma
 
@@ -16,6 +17,11 @@ class User(db.Model):
     goals = db.relationship("Goal", back_populates="user")
 
 class UserSchema(ma.Schema):
+    f_name = fields.String(required=True, validate=And(
+        Length(min=2, error="Firstname must be at least 2 characters long"),
+        Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed")
+    ))
+
     workouts = fields.List(fields.Nested("WorkoutSchema", exclude=["user"]))
     goals = fields.List(fields.Nested("GoalSchema", exclude=["user"]))
     class Meta:

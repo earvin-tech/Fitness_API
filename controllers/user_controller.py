@@ -27,7 +27,7 @@ def get_user(user_id):
 @users_bp.route("/", methods=["POST"])
 def create_user():
     try: 
-        body_data = request.get_json()
+        body_data = user_schema.load(request.get_json())
 
         new_user = User(
             f_name=body_data.get("f_name"),
@@ -69,7 +69,7 @@ def update_user(user_id):
         stmt = db.select(User).filter_by(id=user_id)
         user = db.session.scalar(stmt)
 
-        body_data = request.get_json()
+        body_data = user_schema.load(request.get_json(), partial=True)
 
         if user:
             user.f_name = body_data.get("f_name") or user.f_name

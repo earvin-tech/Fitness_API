@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask # type:ignore
+from marshmallow.exceptions import ValidationError # type: ignore
 
 from init import db, ma
 from controllers.cli_controller import db_commands
@@ -17,6 +18,10 @@ def create_app():
 
     db.init_app(app)
     ma.init_app(app)
+
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {"message": err.messages}, 400
 
     app.register_blueprint(db_commands)
     app.register_blueprint(users_bp)
