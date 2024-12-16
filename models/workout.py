@@ -21,8 +21,16 @@ class Workout(db.Model):
 class WorkoutSchema(ma.Schema):
     @validates('workout_date')
     def validate_workout_date(self, value):
+        today = date.today()
         if date.fromisoformat(value) < date.fromisoformat("2010-01-01"):
             raise ValidationError("Workout date cannot be before Jan 1st 2010")
+        if date.fromisoformat(value) > today:
+            raise ValidationError("Workout date cannot be in the future")
+        
+    @validates('duration')
+    def validate_duration(self, value):
+        if value > "24:00:00":
+            raise ValidationError("Duration cannot be longer than 24 hours")
         
     name = fields.String(validate=And(
         Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed")
