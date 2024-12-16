@@ -21,8 +21,12 @@ class Workout(db.Model):
 class WorkoutSchema(ma.Schema):
     @validates('workout_date')
     def validate_workout_date(self, value):
-        if date.fromisoformat(value) < date.fromisoformat("2000-01-01"):
-            raise ValidationError("Workout datte cannot be before Jan 1st 2000")
+        if date.fromisoformat(value) < date.fromisoformat("2010-01-01"):
+            raise ValidationError("Workout date cannot be before Jan 1st 2010")
+        
+    name = fields.String(validate=And(
+        Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed")
+    ))
 
     ordered=True
     user = fields.Nested("UserSchema", only=["f_name", "l_name"])
