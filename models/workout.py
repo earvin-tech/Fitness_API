@@ -1,4 +1,7 @@
-from marshmallow import fields # type:ignore
+from marshmallow import fields, validates # type:ignore
+from datetime import date
+from marshmallow.validate import Length, And, Regexp # type: ignore
+from marshmallow.exceptions import ValidationError # type:ignore
 
 from init import db, ma
 
@@ -16,6 +19,11 @@ class Workout(db.Model):
     workout_exercises = db.relationship("WorkoutExercise", back_populates="workout", cascade="all,delete")
 
 class WorkoutSchema(ma.Schema):
+    @validates('workout_date')
+    def validate_workout_date(self, value):
+        if date.fromisoformat(value) < date.fromisoformat("2000-01-01"):
+            raise ValidationError("Workout datte cannot be before Jan 1st 2000")
+
     ordered=True
     user = fields.Nested("UserSchema", only=["f_name", "l_name"])
     workout_exercises = fields.List(fields.Nested("WorkoutExerciseSchema", exclude=["workout"]))
