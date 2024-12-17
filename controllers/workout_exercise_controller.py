@@ -28,7 +28,7 @@ def get_workout_exercise(workout_exercise_id):
 @workout_exercises_bp.route("/", methods=["POST"])
 def create_workout_exercise():
     try:
-        body_data = request.get_json()
+        body_data = workout_exercise_schema.load(request.get_json())
 
         new_workout_exercise = WorkoutExercise(
             sets=body_data.get("sets"),
@@ -67,7 +67,7 @@ def update_workout_exercise(workout_exercise_id):
         stmt = db.select(WorkoutExercise).filter_by(id=workout_exercise_id)
         workout_exercise = db.session.scalar(stmt)
 
-        body_data = request.get_json()
+        body_data = workout_exercise_schema.load(request.get_json())
         
         if workout_exercise:
             workout_exercise.sets = body_data.get("sets") or workout_exercise.sets

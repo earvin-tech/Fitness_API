@@ -1,4 +1,6 @@
-from marshmallow import fields # type:ignore
+from marshmallow import fields, validates # type:ignore
+from marshmallow.exceptions import ValidationError # type: ignore
+
 
 from init import db, ma
 
@@ -17,6 +19,22 @@ class WorkoutExercise(db.Model):
     exercise = db.relationship("Exercise", back_populates="workout_exercises")
 
 class WorkoutExerciseSchema(ma.Schema):
+    
+    @validates('sets')
+    def validate_sets(self, value):
+        if value < 1:
+            raise ValidationError("Sets cannot be less than 1")
+        
+    @validates('reps')
+    def validate_reps(self, value):
+        if value < 1:
+            raise ValidationError("Reps cannot be less than 1")
+        
+    @validates('weight')
+    def validate_weight(self, value):
+        if value < 0.25:
+            raise ValidationError("Weight must be at least 0.25 kgs")
+
     workout = fields.Nested("WorkoutSchema", only=["user_id","name"])
     exercise = fields.Nested("ExerciseSchema", only=["name"])
     class Meta:
