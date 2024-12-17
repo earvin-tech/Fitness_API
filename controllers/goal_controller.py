@@ -27,7 +27,7 @@ def get_goal(goal_id):
 @goals_bp.route("/", methods=["POST"])
 def create_goal():
     try:
-        body_data = request.get_json()
+        body_data = goal_schema.load(request.get_json())
 
         new_goal = Goal(
             name=body_data.get("name"),
@@ -65,7 +65,7 @@ def update_goal(goal_id):
         stmt = db.select(Goal).filter_by(id=goal_id)
         goal = db.session.scalar(stmt)
 
-        body_data = request.get_json()
+        body_data = goal_schema.load(request.get_json())
 
         if goal:
             goal.name = body_data.get("name") or goal.name
