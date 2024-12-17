@@ -34,6 +34,7 @@ def create_goal():
             exercise_id=body_data.get("exercise_id"),
             user_id=body_data.get("user_id"),
             goal_weight=body_data.get("goal_weight"),
+            target_date=body_data.get("target_date"),
             status_achieved=body_data.get("status_achieved")
         )
 
@@ -73,6 +74,7 @@ def update_goal(goal_id):
             goal.user_id = body_data.get("user_id") or goal.user_id
             goal.goal_weight = body_data.get("goal_weight") or goal.goal_weight
             goal.status_achieved = body_data.get("status_achieved") or goal.status_achieved
+            goal.target_date = body_data.get("target_date") or goal.target_date
 
             db.session.commit()
 

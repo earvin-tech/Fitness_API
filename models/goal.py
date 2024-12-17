@@ -15,6 +15,7 @@ class Goal(db.Model):
     exercise_id = db.Column(db.Integer, db.ForeignKey("exercises.id"), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     goal_weight = db.Column(db.Float, nullable=False)
+    target_date = db.Column(db.Date)
     status_achieved = db.Column(db.Boolean, nullable=False, default=False)
 
     user = db.relationship("User", back_populates="goals")
@@ -35,7 +36,7 @@ class GoalSchema(ma.Schema):
     user = fields.Nested("UserSchema", only=["f_name", "l_name"])
     exercise = fields.Nested("ExerciseSchema", only=["name"])
     class Meta:
-        fields = ("id", "name", "exercise_id", "user_id", "goal_weight", "status_achieved", "user", "exercise")
+        fields = ("id", "name", "exercise_id", "user_id", "goal_weight", "status_achieved", "target_date", "user", "exercise")
 
 goal_schema = GoalSchema()
 goals_schema = GoalSchema(many=True)
