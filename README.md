@@ -56,7 +56,7 @@ Attributes:
 - status: If the goal has been achieved or not.
 
 ## Entity Relational Diagram
-![ERD](Fitness_ERD[updated].png)
+![ERD](Fitness_ERD[updated2].png)
 
 ## Installation
 
