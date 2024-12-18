@@ -1,6 +1,6 @@
 from marshmallow import fields, validates # type:ignore
 from datetime import date
-from marshmallow.validate import Length, And, Regexp # type: ignore
+from marshmallow.validate import And, Regexp # type: ignore
 from marshmallow.exceptions import ValidationError # type:ignore
 
 from init import db, ma

@@ -22,6 +22,14 @@ def create_app():
     @app.errorhandler(ValidationError)
     def validation_error(err):
         return {"message": err.messages}, 400
+    
+    @app.errorhandler(400)
+    def bad_request(err):
+        return {"message": str(err)}, 400
+    
+    @app.errorhandler(404)
+    def not_found(err):
+        return {"message": str(err)}, 404
 
     app.register_blueprint(db_commands)
     app.register_blueprint(users_bp)

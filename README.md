@@ -54,6 +54,7 @@ Attributes:
 - user_id: ID of user goal belongs to.
 - goal_weight: The target weight for exercise to achieve goal.
 - status: If the goal has been achieved or not.
+- target_date: Target date the goal must be achieved by (optional).
 
 ## Entity Relational Diagram
 ![ERD](Fitness_ERD[updated2].png)
