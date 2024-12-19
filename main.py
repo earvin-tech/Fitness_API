@@ -40,4 +40,7 @@ def create_app():
     app.register_blueprint(workouts_bp)
     app.register_blueprint(workout_exercises_bp)
     app.register_blueprint(goals_bp)
+    
+    app.json.sort_keys = False
+
     return app
