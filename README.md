@@ -54,9 +54,10 @@ Attributes:
 - user_id: ID of user goal belongs to.
 - goal_weight: The target weight for exercise to achieve goal.
 - status: If the goal has been achieved or not.
+- target_date: Target date the goal must be achieved by (optional).
 
 ## Entity Relational Diagram
-![ERD](Fitness_ERD[updated].png)
+![ERD](Fitness_ERD[updated2].png)
 
 ## Installation
 
@@ -136,3 +137,7 @@ Below is a list of all required external packages:
 
 ## API usage constraints
 This API focuses on exercises that utilise machines or free-weights such as dumbells, barbells, olympic bars etc. So for body-weight exercises, cardio exercises and other exercises which do not utilise weight further implementations will be required in the future.
+
+
+## Deployment
+API deployed on Render --> https://fitness-api-ky6u.onrender.com

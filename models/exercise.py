@@ -1,4 +1,6 @@
-from marshmallow import fields # type: ignore
+from marshmallow import fields, validates # type: ignore
+from marshmallow.validate import Regexp, And, Length # type: ignore
+from marshmallow.exceptions import ValidationError  # type: ignore
 
 from init import db, ma
 
@@ -14,6 +16,16 @@ class Exercise(db.Model):
     goals = db.relationship("Goal", back_populates="exercise", cascade="all,delete")
 
 class ExerciseSchema(ma.Schema):
+    name = fields.String(required=True, validate = And(
+        Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed"),
+        Length(min=2, error="Name must be at least 2 characters long")
+    ))
+
+    muscle_group = fields.String(validate = And(
+        Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed"),
+        Length(min=2, error="Muscle group must be at least 2 characters long")
+    ))
+
     workout_exercises = fields.List(fields.Nested("WorkoutExerciseSchema", exclude=["exercise"]))
     goals = fields.List(fields.Nested("GoalSchema", exclude=["exercise"]))
     class Meta:
