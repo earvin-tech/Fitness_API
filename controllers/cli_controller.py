@@ -109,7 +109,7 @@ def seed_tables():
             exercise_id=1,
             user_id=1,
             goal_weight=20.00,
-            status_achieved=False
+            status_achieved=False,
         )
     ]
 
