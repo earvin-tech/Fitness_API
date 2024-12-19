@@ -135,6 +135,20 @@ Below is a list of all required external packages:
 - wcwidth==0.2.13
 - Werkzeug==3.1.3
 
+## RDBMS
+The Fitness Workout Tracker API uses a Relaional Database Management System; Postgres. A relational database has many advantages that make it perfect for this project.
+
+Advantages:
+- ACID compliance.
+- Data integrity: Primary and foreign keys avoid duplicate rows, ensures information is correctly related.
+- Normalisation: Reduces data redundancy.
+  
+Disadvantages:
+- Flexibility: Rigid schemas.
+- Performance: Time to perform complex queries increase.
+
+A relational database is perfect for this API as it does not contain many tables, complexity is low and hence performance will not be an issue as well as the flexibility of schemas. As long as we keep it ACID compliant the use of primary and foreign keys lets us reduce any duplications of data. For example the user_id will make sure the workout belongs to only one user or to only one goal. Here the relation between user and workout is made very clear.
+
 ## API usage constraints
 This API focuses on exercises that utilise machines or free-weights such as dumbells, barbells, olympic bars etc. So for body-weight exercises, cardio exercises and other exercises which do not utilise weight further implementations will be required in the future.
 
