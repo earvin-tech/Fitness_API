@@ -137,3 +137,7 @@ Below is a list of all required external packages:
 
 ## API usage constraints
 This API focuses on exercises that utilise machines or free-weights such as dumbells, barbells, olympic bars etc. So for body-weight exercises, cardio exercises and other exercises which do not utilise weight further implementations will be required in the future.
+
+
+## Deployment
+API deployed on Render --> https://fitness-api-ky6u.onrender.com
