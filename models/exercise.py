@@ -26,10 +26,8 @@ class ExerciseSchema(ma.Schema):
         Length(min=2, error="Muscle group must be at least 2 characters long")
     ))
 
-    workout_exercises = fields.List(fields.Nested("WorkoutExerciseSchema", exclude=["exercise"]))
-    goals = fields.List(fields.Nested("GoalSchema", exclude=["exercise"]))
     class Meta:
-        fields = ("id", "name", "muscle_group", "workout_exercises", "goals")
+        fields = ("id", "name", "muscle_group")
 
 exercise_schema = ExerciseSchema()
 exercises_schema = ExerciseSchema(many=True)
