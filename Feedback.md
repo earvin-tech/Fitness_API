@@ -19,3 +19,45 @@ Action required:
 - I've already stated that the API will focus on weight training only, cardio and body weight exercises will be implemented in the future.
 - Will include target date for goal.
 - Make goal status dynamic if goal is achieved to change itself. (Maybe a future implementation depending on time)
+
+
+From: Evan Meehan
+Content reviewed: Workout.py (model and controller)
+Date: 19/12/2024    
+    
+    **Strengths:**
+
+    ***Database Design:***
+    - The Workout model has a clear structure with appropriate relationships (user and workout_exercises).
+
+    - The use of ```ForeignKey and cascade="all, delete"``` ensures proper data integrity and cascading deletion.
+
+    ***Validation:***
+    - The custom validation methods in WorkoutSchema for workout_date and duration are thoughtful and ensure data correctness.
+    - The use of Marshmallow's Regexp validator for name ensures user input constraints.
+
+    ***Serialisation:***
+    - ```fields.Nested``` for ```user``` and ```workout_exercises``` maintains modularity by linking schemas instead of duplicating fields.
+
+    **Areas For Improvement:**
+
+    ***Field Specifications:***
+    - Adding ```nullable=False``` constraints to fields like ```workout_date``` and ```duration``` ensures consistency between the database schema and the validation logic.
+
+    ***Error Messages:***
+    - Improve error messages for validation to provide clearer guidance, e.g., include examples or valid formats for users.
+
+    ***Code Comments:***
+    - Add comments explaining the purpose of relationships and validations to make the code more maintainable for others (or your future self).
+
+    ***Imports:***
+    - You are importing Length but not using it. Remove unused imports to keep the code clean.
+
+    ***Testing Considerations:***
+    - Ensure unit tests validate all edge cases, such as invalid dates, excessively long durations, and invalid characters in name. 
+
+Action required:
+- Improve error messages to include example inputs
+- Add code comments for documentation purposes
+- Remove unnecessary imports eg. Length when not used
+- More testing considerations.
