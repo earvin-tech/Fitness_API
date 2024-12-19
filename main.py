@@ -2,6 +2,9 @@ import os
 
 from flask import Flask # type:ignore
 from marshmallow.exceptions import ValidationError # type: ignore
+from dotenv import load_dotenv # type: ignore
+load_dotenv()
+
 
 from init import db, ma
 from controllers.cli_controller import db_commands
