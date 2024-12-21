@@ -155,3 +155,5 @@ This API focuses on exercises that utilise machines or free-weights such as dumb
 
 ## Deployment
 API deployed on Render --> https://fitness-api-ky6u.onrender.com
+
+To use please attach your chosen route like so: https://fitness-api-ky6u.onrender.com/[ROUTE] at the end of the url. Eg: https://fitness-api-ky6u.onrender.com/users
