@@ -33,7 +33,7 @@ class WorkoutSchema(ma.Schema):
             raise ValidationError("Duration cannot be longer than 24 hours")
         
     name = fields.String(validate=And(
-        Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed")
+        Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed, eg: 'Arm Workout 7'")
     ))
 
     ordered=True

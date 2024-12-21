@@ -25,7 +25,7 @@ class GoalSchema(ma.Schema):
 
     name = fields.String(validate=And(
         Length(min=2, error="Name must be at least 2 characters long"),
-        Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed")
+        Regexp('^[A-Za-z][A-Za-z0-9 ]*$', error="Only alphanumeric characters and spaces allowed, eg: 'Stronger Legs'")
     ))
 
     @validates('goal_weight')

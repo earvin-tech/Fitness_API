@@ -17,12 +17,12 @@ class Exercise(db.Model):
 
 class ExerciseSchema(ma.Schema):
     name = fields.String(required=True, validate = And(
-        Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed"),
+        Regexp('^[A-Za-z][A-Za-z ]*$', error="Only letters and spaces are allowed, eg: 'Bench Press'"),
         Length(min=2, error="Name must be at least 2 characters long")
     ))
 
     muscle_group = fields.String(validate = And(
-        Regexp('^[A-Za-z][A-Za-z]*$', error="Only letters are allowed"),
+        Regexp('^[A-Za-z][A-Za-z ]*$', error="Only letters and spaces are allowed, eg:'Lower Back'"),
         Length(min=2, error="Muscle group must be at least 2 characters long")
     ))
 
