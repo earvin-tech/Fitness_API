@@ -84,4 +84,4 @@ def update_workout(workout_id):
         return {"message": err.orig.diag.message_primary}, 409
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
-            return {"message": f"The user id entered is not found"}, 404
+            return {"message": "The user id entered is not found"}

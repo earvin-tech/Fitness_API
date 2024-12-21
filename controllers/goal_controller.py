@@ -47,6 +47,8 @@ def create_goal():
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+        if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
+            return {"message": "Either user id or exercise id is not found"}
         
 @goals_bp.route("/<int:goal_id>", methods=["DELETE"])
 def delete_goal(goal_id):
@@ -83,4 +85,7 @@ def update_goal(goal_id):
             return {"message": f"Goal with ID {goal_id} does not exist"}, 404
 
     except IntegrityError as err:
-        return {"message": err.orig.diag.message_primary}, 409
+        if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
+            return {"message": "Either user id or exercise id is not found"}
+        else:
+            return {"message": err.orig.diag.message_primary}, 409

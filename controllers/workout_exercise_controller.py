@@ -47,6 +47,8 @@ def create_workout_exercise():
     except IntegrityError as err:
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"The field '{err.orig.diag.column_name}' is required"}, 409
+        if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
+            return {"message": "Either exercise id or workout id is not found"}
         
 @workout_exercises_bp.route("/<int:workout_exercise_id>", methods=["DELETE"])
 def delete_workout_exercise(workout_exercise_id):
@@ -82,4 +84,7 @@ def update_workout_exercise(workout_exercise_id):
         else:
             return {"message": f"Workout exercise with ID {workout_exercise_id} does not exist"}, 404
     except IntegrityError as err:
-        return {"message": err.orig.diag.message_primary}, 409
+        if err.orig.pgcode == errorcodes.FOREIGN_KEY_VIOLATION:
+            return {"message": "Either exercise id or workout id is not found"}
+        else:
+            return {"message": err.orig.diag.message_primary}, 409
